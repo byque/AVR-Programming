@@ -1,4 +1,4 @@
-Code and Examples from "Make: AVR Programming"
+Código y Ejemplos de "Make: AVR Programming"
 ==============================================
 
 Welcome!
