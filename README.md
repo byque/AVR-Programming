@@ -1,10 +1,10 @@
 Código y Ejemplos de "Make: AVR Programming"
 ==============================================
 
-Welcome!
+Bienvenidos!
 --------
 
-Here you'll find all the code (and more!) for the Maker Media book 
+Aquí encontrarás todo el código (y más) para el libro de Maker Media
  [Make: AVR Programming](http://shop.oreilly.com/product/0636920028161.do).
 
 
