@@ -15,90 +15,55 @@ Las diferencias principales entre este repositorio y el original son:
 ADVERTENCIA! Este es un trabajo en proceso y no está terminado.
 
 
-Getting Started
----------------
+Para empezar
+------------
 
 * Primero, descargar los contenidos de este repositorio en tu disco duro. La manera más fácil es con el botón "Download ZIP" que se encuentra en la parte superior derecha de esta página web. Extrae los contenidos del archivo zip a tu conveniencia. (Eres libre de clonar el repositorio si usas Git.)
 
 * La mayoría de los proyectos comparten un set común de definiciones de pines y una librerial serial USART común y simple en el directorio **AVR-Programing-Library**. Los archivos make que se incluyen dependen por defecto de esta estructura del directorio, por ello no muevas las carpetas a menos que también cambies la ruta hacia los archivos incluídos en el archivo make.
   
-* If you're using the Arduino IDE, you'll want to copy the **AVR-Programming-Library** directory
-  into your **sketchbook/libraries** folder.  If you don't know where this is, you can find out in the 
-  "File...Settings" dialog within Arduino.  Now you can link your code to use this library simply
-  using "Sketch...Import Library" and selecting the library from the the menu.
+* Si estás usando el Arduino IDE, debes copiar el directorio **AVR-Programming-Library** en tu carpeta **sketchbook/libraries**. Si no sabes donde está, puedes encontrarla en opciones en el diálogo de localización dentro del Arduino IDE. Con eso puedes enlazar tu código para que use esta librería usando simplemente "Programa...Incluir Librería" y seleccionando la librería en el menú.
 
-* Now you will be set to open the code, edit it, and flash it into the AVR following the directions
-  in the book.
+* Ahora estarás listo para abrir el código, editarlo y cargarlo en la memoria flash del AVR siguiendo las direcciones del libro.
   
   
-Repo Layout
------------
+Disposción del Repositorio
+--------------------------
 
-All of the project code is organized by the chapters in the book.  So if
-you're looking for an example of some SPI code, see the "Chapter16_SPI" folder for 
-SPI-related projects.  That's obvious.
+Todo el código del proyecto está organizado por los capítulos del libro. Así que si estás buscando un ejemplo de código SPI, mira en la carpeta "Chapter16_SPI" para proyectos relacionados con SPI, a pesar de que suena obvio.
 
-But a bunch of the projects are interesting in addition to the topic covered in
-the chapter.  For instance, "Chapter05_Serial-IO" includes a project that uses
-the serial communication between your desktop computer and the AVR to turn your
-computer keyboard into a musical keyboard that plays notes generated on the
-AVR, turning it into a serial-port-controlled organ.  You wouldn't think to 
-go looking in the Serial I/O chapter unles you were following along in the book. 
+Sin embargo, un montón de proyectos interesantes se encuentran adicionalmente al tema cubierto en el capítulo. Por ejemplo, "Chapter05_Serial-IO" incluye un proyecto que usa la comunicación serial entre tu computadora y el AVR para convertir el teclado de tu computadora en un teclado musical que toca las notas generadas en el AVR, convirtiéndolo en un órgano controlado por un puerto serial. No pensarías buscar en el capítulo de Serial I/O a menos que estuvieras siguiendo el libro.
 
-So for an overview all the projects, the file [allProjectsList](https://github.com/hexagon5un/AVR-Programming/blob/master/allProjectsList) lists them all out by name.  
+Por esa razón, para una visión detallada de todos los proyectos, el archivo [allProjectsList](https://github.com/hexagon5un/AVR-Programming/blob/master/allProjectsList) los enlista a todos por nombre.
+
 
 setupProject
 ------------
 
-If you'd like a blank template to start writing your own AVR code, 
-have a look in the **setupProject** directory that I've included here. Inside, you'll find 
-**main.c** and **main.h** files that are essentially blank and ready to go.  **main.c** 
-makes use of my simple USART library, which is also included an linked in by the **Makefile**. 
-In short, you could copy this directory, rename files, and start using it in your own projects.
+Si quieres una plantilla en blanco para comenzar a escribir tu propio código AVR, hecha un vistazo en el directorio **setupProject** que está incluído aquí. Adentro encontrarás los archivos **main.c** y **main.h** que están esencialmente en blanco y listos para usarse.
 
-But you don't have to do that manually.  Running *python setupProject.py
-myProjectName* will create a directory called **myProjectName** for you, copy
-the blank main files, renaming them as appropriate, and set up the Makefile
-accordingly.  All that's left for you to do is the hard part -- actually
-coding.  
+**main.c** usa la librería simple de USART, que también está incluída y enlazada por el archivo **Makefile**.
 
-If you use this setup a lot, you'll want to personalize the **Makefile** and
-the two **main** files to suit your own preferences.  That way, whenever you
-start up a new project, it'll include a customized **Makefile** that has your
-programmer, chip type, and favorite baud rate already set.   
+En corto, puedes copiar este directorio, renombrar los archivos y comenzar a usarlo en tus propios proyectos.
 
-Finally, if you like to map out your pin definitions in macro definitions, run
-*python createPinDefines.py*.  The program will ask you what you'd like to call
-each pin macro (e.g. "LED0") and then which pin on the AVR you'd like to
-associate with it (e.g. "PB1").  When you're done entering your pin layout,
-it'll create a "pinDefines.h" file with (I hope) nicely-named macros.  Move
-this file into the right directory, and include it in your code.  Calling
-LED0_SET_HIGH will turn your LED on.
+Pero no tienes que hacerlo manualmente. Ejecutando *python setuProject.py NombreProyecto* creará un directorio llamado **NombreProyecto** para ti, además copia los archivos main en blanco, renombrándolos apropiadamente y configurando el archivo make respectivamente. Todo lo que te queda por hacer es la parte difícil -- codificar.
+
+Si usas a menudo esta configuración, querrás personalizar el **Makefile** y los dos archivos **main** para que se ajusten a tus preferencias. De esa forma, cuando quieras comenzar un nuevo proyecto, éste incluirá un **Makefile** personalizado que tiene tu programador, tipo de chip y tu velocidad de transmisión ya configurados.
+
+Finalmente, si quieres mapear las definiciones de tus pines en definiciones macro, ejecuta *python createPinDefines.py*. El programa te preguntará cómo quieres llamar a cada macro del pin (ej. "LED0") y luego qué pin en el AVR quieres asociar con ese nombre (ej. "PB1"). Cuando acabes de ingresar la dispocisión de tus pines, el programa creará un archivo "pinDefine.h" con unos macros bellamente nombrados (eso espero). Mueve este archivo en el directorio adecuado e inclúyelo en tu código. Recurrir a LED0_Set_HIGH encenderá al LED.
 
 
-More!
------
+Más Recursos!
+-------------
 
-You've read the book, you've built the projects, you've worked through the code.
-But still you hunger for more projects, more examples, more, more, more!
-If I may toot my own horn, you should visit [LittleHacks.org](http://littlehacks.org)
-where I blog about whatever microcontroller projects I'm currently up to.  
+Has leído el libro, has construído los proyectos, has trabajado el código. Pero aún tienes sed de más proyectos, más ejemplos, más, más, más! Si tuviera que sonar su propio cuerno, deberías visitar [LittleHacks.org](http://littlehacks.org) donde Elliot Williams escribe blogs acerca de cualquier proyecto de microcontroladores en el que se encuentre al momento.
 
-In particular, if you're reading
- [Make: AVR Programming](http://shop.oreilly.com/product/0636920028161.do), and
-you're interested in fully-elaborated versions of the projects with more
-photos, videos, and explanation than could fit in a book, head on over to
- [LittleHacks.org's AVR-Programming Section](http://littlehacks.org/AVR-Programming).  
+Especialmente, si estás leyendo [Make: AVR Programming](http://shop.oreilly.com/product/0636920028161.do) y estás interesado en versiones completamente elaboradas de los proyectos con más fotos, videos y explicaciones que puedan entrar en un libro, dirígite a [LittleHacks.org's AVR-Programming Section](http://littlehacks.org/AVR-Programming).
 
-Once you've exhausted all of these resources, you should *definitely* head over
-to [The Cornell University ECE 4760 Final
-Projects](http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/)
-list page.  It's an awe-inspiring collection of applications, and sure to spark
-some creative thoughts.  It's all well-documented and there's tons of source
-code in C.  [Professor Land's links section]
-(http://people.ece.cornell.edu/land/courses/ece4760/#links) is also top-notch,
-and his lectures on YouTube are also worth a look if you're getting serious
-about this whole AVR deal.  
+Una vez que hayas agotado todos estos recursos, deberías *definitivamente* dirigirte a la página de listados [Proyectos Finales ECE 4760 de la Universidad de Cornell University](http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/). Es una colección inspiradora y asombrosa de aplicaciones, y de seguro despertará pensamientos creativos. Todo está bien documentado y hay una vasta cantidad de código fuente en C. 
+
+La [Sección de enlaces del Profesor Land]
+(http://people.ece.cornell.edu/land/courses/ece4760/#links) también es de primera categoría, y sus clases en YouTube también merecen un vistazo si estás tomándote en serio todo este asunto de AVR.
 
 
 
