@@ -60,7 +60,7 @@ Has leído el libro, has construído los proyectos, has trabajado el código. Pe
 
 Especialmente, si estás leyendo [Make: AVR Programming](http://shop.oreilly.com/product/0636920028161.do) y estás interesado en versiones completamente elaboradas de los proyectos con más fotos, videos y explicaciones que puedan entrar en un libro, dirígite a [LittleHacks.org's AVR-Programming Section](http://littlehacks.org/AVR-Programming).
 
-Una vez que hayas agotado todos estos recursos, deberías *definitivamente* dirigirte a la página de listados [Proyectos Finales ECE 4760 de la Universidad de Cornell University](http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/). Es una colección inspiradora y asombrosa de aplicaciones, y de seguro despertará pensamientos creativos. Todo está bien documentado y hay una vasta cantidad de código fuente en C. 
+Una vez que hayas agotado todos estos recursos, deberías *definitivamente* dirigirte a la página de listados [Proyectos Finales ECE 4760 de la Universidad de Cornell](http://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/). Es una colección inspiradora y asombrosa de aplicaciones, y de seguro despertará pensamientos creativos. Todo está bien documentado y hay una vasta cantidad de código fuente en C. 
 
 La [Sección de enlaces del Profesor Land]
 (http://people.ece.cornell.edu/land/courses/ece4760/#links) también es de primera categoría, y sus clases en YouTube también merecen un vistazo si estás tomándote en serio todo este asunto de AVR.
