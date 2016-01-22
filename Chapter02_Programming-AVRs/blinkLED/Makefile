@@ -25,87 +25,32 @@ LIBDIR = ../../AVR-Programming-Library
 
 PROGRAMMER_TYPE = usbasp
 # # argumentos extra para avrdude: baud rate, chip type, -F flag, etc.
-# PROGRAMMER_ARGS =
+PROGRAMMER_ARGS =
 
-OBJECTS	= blinkLED.o
+##########------------------------------------------------------##########
+##########                Ubicacion del Programa		        ##########
+##########        No debes cambiarla si esta en tu ruta		    ##########
+##########------------------------------------------------------##########
 
-# Para el ATTiny45
-# ver http://www.engbedded.com/fusecalc/
-FUSES      = -U lfuse:w:0xE2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
-
-# Tune the lines below only if you know what you are doing:
-AVRDUDE = avrdude -p $(MCU) -c $(PROGRAMMER_TYPE)
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) -mmcu=$(MCU)
-
-# symbolic targets:
-all:	blinkLED.hex
-
-.c.o:
-	$(COMPILE) -c $< -o $@
-
-.S.o:
-	$(COMPILE) -x assembler-with-cpp -c $< -o $@
-
-.c.s:
-	$(COMPILE) -S $< -o $@
-
-flash:	all
-	$(AVRDUDE) -U flash:w:blinkLED.hex:i
-
-fuse:
-	$(AVRDUDE) $(FUSES)
-
-# Xcode uses the Makefile targets "", "clean" and "install"
-install: flash fuse
-
-# if you use a bootloader, change the command below appropriately:
-load: all
-	bootloadHID blinkLED.hex
-
-clean:
-	rm -f blinkLED.hex blinkLED.elf $(OBJECTS)
-
-# file targets:
-blinkLED.elf: $(OBJECTS)
-	$(COMPILE) -o blinkLED.elf $(OBJECTS)
-
-blinkLED.hex: blinkLED.elf
-	rm -f blinkLED.hex
-	avr-objcopy -j .text -j .data -O ihex blinkLED.elf blinkLED.hex
-	avr-size --format=avr --mcu=$(DEVICE) blinkLED.elf
-# If you have an EEPROM section, you must also create a hex file for the
-# EEPROM and add it to the "flash" target.
-
-# Targets for code debugging and analysis:
-disasm:	blinkLED.elf
-	avr-objdump -d blinkLED.elf
-
-cpp:
-	$(COMPILE) -E blinkLED.c
-
-# ##########------------------------------------------------------##########
-# ##########                Ubicacion del Programa		        ##########
-# ##########        No debes cambiarla si esta en tu ruta		    ##########
-# ##########------------------------------------------------------##########
-#
-# CC = avr-gcc
-# OBJCOPY = avr-objcopy
-# OBJDUMP = avr-objdump
-# AVRSIZE = avr-size
+CC = avr-gcc
+OBJCOPY = avr-objcopy
+OBJDUMP = avr-objdump
+AVRSIZE = avr-size
 # AVRDUDE = avrdude	
-# ##########------------------------------------------------------##########
-# ##########                   Magia del archivo Make	            ##########
-# ##########         Resumen:                                     ##########
-# ##########             Queremos un archivo .hex					##########
-# ##########        Compilar los archivos fuente en .elf          ##########
-# ##########        Convertir el archivo .elf en .hex             ##########
-# ##########        No deberias necesitar editar abajo			##########
-# ##########------------------------------------------------------##########
-#
-# ## El nombre de tu proyecto (sin .c)
-# # TARGET = blinkLED
-# ## O nombralo automaticamente en base al directorio que lo abarca
-# TARGET = $(lastword $(subst /, ,$(CURDIR)))
+
+##########------------------------------------------------------##########
+##########                   Magia del archivo Make	            ##########
+##########         Resumen:                                     ##########
+##########             Queremos un archivo .hex				 ##########
+##########        Compilar los archivos fuente en .elf          ##########
+##########        Convertir el archivo .elf en .hex             ##########
+##########        No deberias necesitar editar abajo			##########
+##########------------------------------------------------------##########
+
+## El nombre de tu proyecto (sin .c)
+# TARGET = blinkLED
+## O nombralo automaticamente en base al directorio que lo abarca
+TARGET = $(lastword $(subst /, ,$(CURDIR)))
 #
 # # Archivos de objeto: encontraran cualquier archivo .c/.h files
 # #  en el directorio actual y en LIBDIR. Si tienes otro (sub)directorio
@@ -180,7 +125,66 @@ cpp:
 #
 # squeaky_clean:
 # 	rm -f *.elf *.hex *.obj *.o *.d *.eep *.lst *.lss *.sym *.map *~ *.eeprom
-#
+
+##########################################################################
+
+OBJECTS	= blinkLED.o
+
+# Para el ATTiny45
+# ver http://www.engbedded.com/fusecalc/
+FUSES      = -U lfuse:w:0xE2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
+
+# Tune the lines below only if you know what you are doing:
+AVRDUDE = avrdude -p $(MCU) -c $(PROGRAMMER_TYPE)
+COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) -mmcu=$(MCU)
+
+# symbolic targets:
+all:	blinkLED.hex
+
+.c.o:
+	$(COMPILE) -c $< -o $@
+
+.S.o:
+	$(COMPILE) -x assembler-with-cpp -c $< -o $@
+
+.c.s:
+	$(COMPILE) -S $< -o $@
+
+flash:	all
+	$(AVRDUDE) -U flash:w:blinkLED.hex:i
+
+fuse:
+	$(AVRDUDE) $(FUSES)
+
+# Xcode uses the Makefile targets "", "clean" and "install"
+install: flash fuse
+
+# if you use a bootloader, change the command below appropriately:
+load: all
+	bootloadHID blinkLED.hex
+
+clean:
+	rm -f blinkLED.hex blinkLED.elf $(OBJECTS)
+
+# file targets:
+blinkLED.elf: $(OBJECTS)
+	$(COMPILE) -o blinkLED.elf $(OBJECTS)
+
+blinkLED.hex: blinkLED.elf
+	rm -f blinkLED.hex
+	avr-objcopy -j .text -j .data -O ihex blinkLED.elf blinkLED.hex
+	avr-size --format=avr --mcu=$(DEVICE) blinkLED.elf
+# If you have an EEPROM section, you must also create a hex file for the
+# EEPROM and add it to the "flash" target.
+
+# Targets for code debugging and analysis:
+disasm:	blinkLED.elf
+	avr-objdump -d blinkLED.elf
+
+cpp:
+	$(COMPILE) -E blinkLED.c
+
+
 # ##########------------------------------------------------------##########
 # ##########              Programmer-specific details             ##########
 # ##########           Flashing code to AVR using avrdude         ##########
