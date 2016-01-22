@@ -18,16 +18,9 @@ ADVERTENCIA! Este es un trabajo en proceso y no está terminado.
 Getting Started
 ---------------
 
-* First, download the contents of this repository onto your hard-drive.  The easiest way
-  is with the "Download ZIP" button above and on the right-hand side of this very web
-  page.  Extract the zip file wherever is comfy.  (Feel free to clone the repo if you 
-  are comfortable with Git.)
+* Primero, descargar los contenidos de este repositorio en tu disco duro. La manera más fácil es con el botón "Download ZIP" que se encuentra en la parte superior derecha de esta página web. Extrae los contenidos del archivo zip a tu conveniencia. (Eres libre de clonar el repositorio si usas Git.)
 
-* Most of the projects share a common set of pin defines and a common simple
-  USART serial library in the **AVR-Programming-Library** directory.  The
-  makefiles I've included depend on the directory structure here by default, so
-  don't go moving the folders around unless you also change the path to
-  included files in the makefile.  
+* La mayoría de los proyectos comparten un set común de definiciones de pines y una librerial serial USART común y simple en el directorio **AVR-Programing-Library**. Los archivos make que se incluyen dependen por defecto de esta estructura del directorio, por ello no muevas las carpetas a menos que también cambies la ruta hacia los archivos incluídos en el archivo make.
   
 * If you're using the Arduino IDE, you'll want to copy the **AVR-Programming-Library** directory
   into your **sketchbook/libraries** folder.  If you don't know where this is, you can find out in the 
