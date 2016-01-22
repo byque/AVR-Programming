@@ -1,32 +1,33 @@
 
 ##########------------------------------------------------------##########
-##########              Project-specific Details                ##########
-##########    Check these every time you start a new project    ##########
+##########			Detalles especificos del Proyecto			##########
+##########  Revisarlos cada vez que comienzas un nuevo proyecto ##########
 ##########------------------------------------------------------##########
 
-MCU   = atmega168p
-F_CPU = 1000000UL  
+MCU   = attiny45
+F_CPU = 8000000UL  
 BAUD  = 9600UL
-## Also try BAUD = 19200 or 38400 if you're feeling lucky.
+## Tambien intenta BAUD = 19200 o 38400 si te sientes con suerte.
 
-## A directory for common include files and the simple USART library.
-## If you move either the current folder or the Library folder, you'll 
-##  need to change this path to match.
+## Un directorio para archivos que se incluyen comunmente y la libreria
+## simple USART. Si mueves ya sea la carpeta actual o la carpeta Library,
+## debes tambien cambiar esta ruta para que coincida.
+
 LIBDIR = ../../AVR-Programming-Library
 
 ##########------------------------------------------------------##########
-##########                 Programmer Defaults                  ##########
-##########          Set up once, then forget about it           ##########
-##########        (Can override.  See bottom of file.)          ##########
+##########		  Opciones del Programador por Defecto			##########
+##########	   Configuralas una vez y luego olvidate de ellas	##########
+##########		(Se pueden anular. Ver el final del archivo)    ##########
 ##########------------------------------------------------------##########
 
-PROGRAMMER_TYPE = usbtiny
-# extra arguments to avrdude: baud rate, chip type, -F flag, etc.
+PROGRAMMER_TYPE = usbasp
+# argumentos extra para avrdude: baud rate, chip type, -F flag, etc.
 PROGRAMMER_ARGS = 	
 
 ##########------------------------------------------------------##########
-##########                  Program Locations                   ##########
-##########     Won't need to change if they're in your PATH     ##########
+##########                Ubicacion del Programa		        ##########
+##########        No debes cambiarla si esta en tu ruta		    ##########
 ##########------------------------------------------------------##########
 
 CC = avr-gcc
@@ -36,44 +37,46 @@ AVRSIZE = avr-size
 AVRDUDE = avrdude
 
 ##########------------------------------------------------------##########
-##########                   Makefile Magic!                    ##########
-##########         Summary:                                     ##########
-##########             We want a .hex file                      ##########
-##########        Compile source files into .elf                ##########
-##########        Convert .elf file into .hex                   ##########
-##########        You shouldn't need to edit below.             ##########
+##########                   Magia del archivo Make	            ##########
+##########         Resumen:                                     ##########
+##########             Queremos un archivo .hex					##########
+##########        Compilar los archivos fuente en .elf          ##########
+##########        Convertir el archivo .elf en .hex             ##########
+##########        No deberias necesitar editar abajo			##########
 ##########------------------------------------------------------##########
 
-## The name of your project (without the .c)
+## El nombre de tu proyecto (sin .c)
 # TARGET = blinkLED
-## Or name it automatically after the enclosing directory
+## O nombralo automaticamente en base al directorio que lo abarca
 TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
-# Object files: will find all .c/.h files in current directory
-#  and in LIBDIR.  If you have any other (sub-)directories with code,
-#  you can add them in to SOURCES below in the wildcard statement.
+# Archivos de objeto: encontraran cualquier archivo .c/.h files 
+#  en el directorio actual y en LIBDIR. Si tienes otro (sub)directorio
+#  con codigo, puedes anadirlos en los SOURCES de abajo en la declaracion
+#  comodin.
+
 SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 HEADERS=$(SOURCES:.c=.h)
 
-## Compilation options, type man avr-gcc if you're curious.
+## Opciones de compilacion, escribe man avr-gcc si eres curioso.
 CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. -I$(LIBDIR)
 CFLAGS = -Os -g -std=gnu99 -Wall
-## Use short (8-bit) data types 
+## Usar tipos de datos cortos (8-bit)
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums 
-## Splits up object files per function
+## Separa los archivos de objeto por funcion
 CFLAGS += -ffunction-sections -fdata-sections 
 LDFLAGS = -Wl,-Map,$(TARGET).map 
-## Optional, but often ends up with smaller code
+## Opcional, pero a menudo acaba con menor codigo
 LDFLAGS += -Wl,--gc-sections 
-## Relax shrinks code even more, but makes disassembly messy
+## Relax reduce el codigo aun mas, pero hace el desamblaje confuso
 ## LDFLAGS += -Wl,--relax
 ## LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## for floating-point printf
 ## LDFLAGS += -Wl,-u,vfprintf -lprintf_min      ## for smaller printf
 TARGET_ARCH = -mmcu=$(MCU)
 
-## Explicit pattern rules:
-##  To make .o files from .c files 
+## Reglas explicitas de patron:
+##  Para hacer archivos .o a partir de .c files 
 %.o: %.c $(HEADERS) Makefile
 	 $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<;
 
@@ -89,7 +92,7 @@ $(TARGET).elf: $(OBJECTS)
 %.lst: %.elf
 	$(OBJDUMP) -S $< > $@
 
-## These targets don't have files named after them
+## Estos archivos de destino no tienen archivos nombrados a partir de ellos
 .PHONY: all disassemble disasm eeprom size clean squeaky_clean flash fuses
 
 all: $(TARGET).hex 
