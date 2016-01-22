@@ -7,6 +7,12 @@ Bienvenidos!
 Aquí encontrarás todo el código (y más) para el libro de Maker Media
  [Make: AVR Programming](http://shop.oreilly.com/product/0636920028161.do).
 
+Las diferencias principales entre este repositorio y el original son: 
+1. El código original está orientado al microcontrolador ATmega168 y sus variantes, mientras que el código en este repositorio está adaptado al attiny45 20PU.
+2. Este repositorio está en español.
+
+ADVERTENCIA! Este es un trabajo en proceso y no está terminado.
+
 
 Getting Started
 ---------------
