@@ -24,13 +24,13 @@ Para empezar
   
 * Si estás usando el Arduino IDE, debes copiar el directorio **AVR-Programming-Library** en tu carpeta **sketchbook/libraries**. Si no sabes donde está, puedes encontrarla en opciones en el diálogo de localización dentro del Arduino IDE. Con eso puedes enlazar tu código para que use esta librería usando simplemente "Programa...Incluir Librería" y seleccionando la librería en el menú.
 
-* Ahora estarás listo para abrir el código, editarlo y cargarlo en la memoria flash del AVR siguiendo las direcciones del libro.
+* Ahora estás listo para abrir el código, editarlo y cargarlo en la memoria flash del AVR siguiendo las direcciones del libro.
   
   
 Disposción del Repositorio
 --------------------------
 
-Todo el código del proyecto está organizado por los capítulos del libro. Así que si estás buscando un ejemplo de código SPI, mira en la carpeta "Chapter16_SPI" para proyectos relacionados con SPI, a pesar de que suena obvio.
+Todo el código del proyecto está organizado por los capítulos del libro. Así que si estás buscando un ejemplo de código SPI, mira en la carpeta "Chapter16_SPI" para proyectos relacionados con SPI, a pesar de que suene obvio.
 
 Sin embargo, un montón de proyectos interesantes se encuentran adicionalmente al tema cubierto en el capítulo. Por ejemplo, "Chapter05_Serial-IO" incluye un proyecto que usa la comunicación serial entre tu computadora y el AVR para convertir el teclado de tu computadora en un teclado musical que toca las notas generadas en el AVR, convirtiéndolo en un órgano controlado por un puerto serial. No pensarías buscar en el capítulo de Serial I/O a menos que estuvieras siguiendo el libro.
 
@@ -40,17 +40,13 @@ Por esa razón, para una visión detallada de todos los proyectos, el archivo [a
 setupProject
 ------------
 
-Si quieres una plantilla en blanco para comenzar a escribir tu propio código AVR, hecha un vistazo en el directorio **setupProject** que está incluído aquí. Adentro encontrarás los archivos **main.c** y **main.h** que están esencialmente en blanco y listos para usarse.
+Si quieres una plantilla en blanco para comenzar a escribir tu propio código AVR, hecha un vistazo en el directorio **setupProject** que está incluído aquí. Adentro encontrarás los archivos **main.c** y **main.h** que están esencialmente en blanco y listos para usarse. **main.c** usa la librería simple de USART, que también está incluída y enlazada por el archivo **Makefile**. En corto, puedes copiar este directorio, renombrar los archivos y comenzar a usarlo en tus propios proyectos.
 
-**main.c** usa la librería simple de USART, que también está incluída y enlazada por el archivo **Makefile**.
-
-En corto, puedes copiar este directorio, renombrar los archivos y comenzar a usarlo en tus propios proyectos.
-
-Pero no tienes que hacerlo manualmente. Ejecutando *python setuProject.py NombreProyecto* creará un directorio llamado **NombreProyecto** para ti, además copia los archivos main en blanco, renombrándolos apropiadamente y configurando el archivo make respectivamente. Todo lo que te queda por hacer es la parte difícil -- codificar.
+Pero no tienes que hacerlo manualmente. Ejecutando *python setupProject.py NombreProyecto* creará un directorio llamado **NombreProyecto** para ti, además copia los archivos main en blanco, renombrándolos apropiadamente y configurando el archivo make respectivamente. Todo lo que te queda por hacer es la parte difícil -- programar.
 
 Si usas a menudo esta configuración, querrás personalizar el **Makefile** y los dos archivos **main** para que se ajusten a tus preferencias. De esa forma, cuando quieras comenzar un nuevo proyecto, éste incluirá un **Makefile** personalizado que tiene tu programador, tipo de chip y tu velocidad de transmisión ya configurados.
 
-Finalmente, si quieres mapear las definiciones de tus pines en definiciones macro, ejecuta *python createPinDefines.py*. El programa te preguntará cómo quieres llamar a cada macro del pin (ej. "LED0") y luego qué pin en el AVR quieres asociar con ese nombre (ej. "PB1"). Cuando acabes de ingresar la dispocisión de tus pines, el programa creará un archivo "pinDefine.h" con unos macros bellamente nombrados (eso espero). Mueve este archivo en el directorio adecuado e inclúyelo en tu código. Recurrir a LED0_Set_HIGH encenderá al LED.
+Finalmente, si quieres mapear las definiciones de tus pines en definiciones macro, ejecuta *python createPinDefines.py*. El programa te preguntará cómo quieres llamar a cada macro del pin (ej. "LED0") y luego qué pin en el AVR quieres asociar con ese nombre (ej. "PB1"). Cuando acabes de ingresar la dispocisión de tus pines, el programa creará un archivo "pinDefine.h" con unos macros bellamente nombrados (idealmente). Mueve este archivo en el directorio adecuado e inclúyelo en tu código. Recurrir a LED0_Set_HIGH encenderá el LED.
 
 
 Más Recursos!
