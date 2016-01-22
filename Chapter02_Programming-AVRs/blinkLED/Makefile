@@ -31,7 +31,7 @@ OBJECTS	= blinkLED.o
 
 # Para el ATTiny45
 # ver http://www.engbedded.com/fusecalc/
-FUSES      = -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
+FUSES      = -U lfuse:w:0xE2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
 
 # Tune the lines below only if you know what you are doing:
 AVRDUDE = avrdude -p $(MCU) -c $(PROGRAMMER_TYPE)
