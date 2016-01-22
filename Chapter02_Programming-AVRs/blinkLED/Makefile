@@ -2,11 +2,11 @@
 # adaptado de http://electronut.in/getting-started-with-attiny85-avr-programming/
 
 ##########------------------------------------------------------##########
-##########			Detalles especificos del Proyecto		    ##########
+##########          Detalles especificos del Proyecto		##########
 ##########  Revisarlos cada vez que comienzas un nuevo proyecto ##########
 ##########------------------------------------------------------##########
 
-MCU	  = attiny45
+MCU   = attiny45
 F_CPU = 8000000
 BAUD  = 9600UL
 ## Tambien intenta BAUD = 19200 o 38400 si te sientes con suerte.
@@ -18,16 +18,16 @@ LIBDIR = ../../AVR-Programming-Library
 
 
 ##########------------------------------------------------------##########
-##########		  Opciones del Programador por Defecto			##########
-##########	   Configuralas una vez y luego olvidate de ellas	##########
-##########		(Se pueden anular. Ver el final del archivo)	##########
+##########	    Opciones del Programador por Defecto	##########
+##########     Configuralas una vez y luego olvidate de ellas	##########
+##########      (Se pueden anular. Ver el final del archivo)	##########
 ##########------------------------------------------------------##########
 
 PROGRAMMER_TYPE = usbasp
 # # argumentos extra para avrdude: baud rate, chip type, -F flag, etc.
 # PROGRAMMER_ARGS =
 
-OBJECTS			= blinkLED.o
+OBJECTS	= blinkLED.o
 
 # Para el ATTiny45
 # ver http://www.engbedded.com/fusecalc/
