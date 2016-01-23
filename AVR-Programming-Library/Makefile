@@ -1,79 +1,79 @@
 
 ##########------------------------------------------------------##########
-##########              Project-specific Details                ##########
-##########    Check these every time you start a new project    ##########
+##########          Detalles especificos del Proyecto		##########
+##########  Revisarlos cada vez que comienzas un nuevo proyecto ##########
 ##########------------------------------------------------------##########
 
-MCU   = atmega168p
-F_CPU = 1000000UL  
+MCU   = attiny45
+F_CPU = 8000000UL
 BAUD  = 9600UL
-## Also try BAUD = 19200 or 38400 if you're feeling lucky.
+## Tambien intenta BAUD = 19200 o 38400 si te sientes con suerte.
 
-## A directory for common include files and the simple USART library.
-## If you move either the current folder or the Library folder, you'll 
-##  need to change this path to match.
+## Un directorio para archivos que se incluyen comunmente y la libreria
+##  simple USART. Si mueves ya sea la carpeta actual o la carpeta Library,
+##  debes tambien cambiar esta ruta para que coincida.
 LIBDIR = ../../AVR-Programming-Library
 
 ##########------------------------------------------------------##########
-##########                 Programmer Defaults                  ##########
-##########          Set up once, then forget about it           ##########
-##########        (Can override.  See bottom of file.)          ##########
+##########	    Opciones del Programador por Defecto	##########
+##########     Configuralas una vez y luego olvidate de ellas	##########
+##########      (Se pueden anular. Ver el final del archivo)	##########
 ##########------------------------------------------------------##########
 
-PROGRAMMER_TYPE = usbtiny
-# extra arguments to avrdude: baud rate, chip type, -F flag, etc.
-PROGRAMMER_ARGS = 	
+PROGRAMMER_TYPE = usbasp
+# argumentos extra para avrdude: baud rate, chip type, -F flag, etc.
+PROGRAMMER_ARGS =
 
 ##########------------------------------------------------------##########
-##########                  Program Locations                   ##########
-##########     Won't need to change if they're in your PATH     ##########
+##########                Ubicacion del Programa		##########
+##########        No debes cambiarla si esta en tu ruta		##########
 ##########------------------------------------------------------##########
 
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 AVRSIZE = avr-size
-AVRDUDE = avrdude
+AVRDUDE = avrdude	
 
 ##########------------------------------------------------------##########
-##########                   Makefile Magic!                    ##########
-##########         Summary:                                     ##########
-##########             We want a .hex file                      ##########
-##########        Compile source files into .elf                ##########
-##########        Convert .elf file into .hex                   ##########
-##########        You shouldn't need to edit below.             ##########
+##########                   Magia del archivo Make	        ##########
+##########         Resumen:                                     ##########
+##########             Queremos un archivo .hex			##########
+##########        Compilar los archivos fuente en .elf          ##########
+##########        Convertir el archivo .elf en .hex             ##########
+##########        No deberias necesitar editar abajo		##########
 ##########------------------------------------------------------##########
 
-## The name of your project (without the .c)
+## El nombre de tu proyecto (sin .c)
 # TARGET = blinkLED
-## Or name it automatically after the enclosing directory
+## O nombralo automaticamente en base al directorio que lo abarca
 TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
-# Object files: will find all .c/.h files in current directory
-#  and in LIBDIR.  If you have any other (sub-)directories with code,
-#  you can add them in to SOURCES below in the wildcard statement.
+# Archivos de objeto: encontraran cualquier archivo .c/.h en el directorio
+#  actual y en LIBDIR. Si tienes otro (sub)directorio con codigo, puedes
+#  anadirlos en los SOURCES de abajo en la declaracion wildcard.
 SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
 OBJECTS=$(SOURCES:.c=.o)
 HEADERS=$(SOURCES:.c=.h)
 
-## Compilation options, type man avr-gcc if you're curious.
+## Opciones de compilacion, escribe man avr-gcc si eres curioso.
 CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. -I$(LIBDIR)
 CFLAGS = -Os -g -std=gnu99 -Wall
-## Use short (8-bit) data types 
-CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums 
-## Splits up object files per function
-CFLAGS += -ffunction-sections -fdata-sections 
-LDFLAGS = -Wl,-Map,$(TARGET).map 
-## Optional, but often ends up with smaller code
-LDFLAGS += -Wl,--gc-sections 
-## Relax shrinks code even more, but makes disassembly messy
+## Usar tipos de datos cortos (8-bit)
+CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
+## Separa los archivos de destino por funcion
+CFLAGS += -ffunction-sections -fdata-sections
+LDFLAGS = -Wl,-Map,$(TARGET).map
+## Opcional, pero a menudo termina en menor codigo
+LDFLAGS += -Wl,--gc-sections
+## Relax reduce el codigo aun mas, pero hace el desamblaje confuso
 ## LDFLAGS += -Wl,--relax
-## LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## for floating-point printf
-## LDFLAGS += -Wl,-u,vfprintf -lprintf_min      ## for smaller printf
+## LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## para printf de punto flotante
+## LDFLAGS += -Wl,-u,vfprintf -lprintf_min      ## para printf mas pequeno
 TARGET_ARCH = -mmcu=$(MCU)
 
-## Explicit pattern rules:
-##  To make .o files from .c files 
+## Reglas explicitas de patron:
+##  Para hacer archivos .o a partir de .c files
 %.o: %.c $(HEADERS) Makefile
 	 $(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<;
 
@@ -84,31 +84,31 @@ $(TARGET).elf: $(OBJECTS)
 	 $(OBJCOPY) -j .text -j .data -O ihex $< $@
 
 %.eeprom: %.elf
-	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@ 
+	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@
 
 %.lst: %.elf
 	$(OBJDUMP) -S $< > $@
 
-## These targets don't have files named after them
+## Estos archivos de destino no tienen archivos nombrados a partir de ellos
 .PHONY: all disassemble disasm eeprom size clean squeaky_clean flash fuses
 
-all: $(TARGET).hex 
+all: $(TARGET).hex
 
 debug:
 	@echo
 	@echo "Source files:"   $(SOURCES)
 	@echo "MCU, F_CPU, BAUD:"  $(MCU), $(F_CPU), $(BAUD)
-	@echo	
+	@echo
 
-# Optionally create listing file from .elf
-# This creates approximate assembly-language equivalent of your code.
-# Useful for debugging time-sensitive bits, 
-# or making sure the compiler does what you want.
+# Opcionalmente crea un archivo de listado a partir de .elf
+# Esto crea un equivalente aproximado de lenguaje de ensamblador de tu codigo.
+# Util para depurar bits sensibles al tiempo,
+# o para asegurar que el compilador haga lo que tu quieres.
 disassemble: $(TARGET).lst
 
 disasm: disassemble
 
-# Optionally show how big the resulting program is 
+# Opcionalmente muestra lo grande que es el programa resultante
 size:  $(TARGET).elf
 	$(AVRSIZE) -C --mcu=$(MCU) $(TARGET).elf
 
@@ -121,15 +121,15 @@ clean:
 squeaky_clean:
 	rm -f *.elf *.hex *.obj *.o *.d *.eep *.lst *.lss *.sym *.map *~ *.eeprom
 
-##########------------------------------------------------------##########
-##########              Programmer-specific details             ##########
-##########           Flashing code to AVR using avrdude         ##########
-##########------------------------------------------------------##########
+#####--------------------------------------------------------------#######
+#####           Detalles especificos del programador		   #######
+#####  Cargar el codigo a la memoria flash del AVR usando avrdude  #######
+#####--------------------------------------------------------------#######
 
-flash: $(TARGET).hex 
+flash: $(TARGET).hex
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U flash:w:$<
 
-## An alias
+## Un alias
 program: flash
 
 flash_eeprom: $(TARGET).eeprom
@@ -138,9 +138,9 @@ flash_eeprom: $(TARGET).eeprom
 avrdude_terminal:
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -nt
 
-## If you've got multiple programmers that you use, 
-## you can define them here so that it's easy to switch.
-## To invoke, use something like `make flash_arduinoISP`
+## Si usas multiples programadores
+## puedes definirlos aqui para que sea facil cambiarlos.
+## Para llamar al programador, usar algo como 'make flash_arduinoISP'
 flash_usbtiny: PROGRAMMER_TYPE = usbtiny
 flash_usbtiny: PROGRAMMER_ARGS =  # USBTiny works with no further arguments
 flash_usbtiny: flash
@@ -150,8 +150,8 @@ flash_usbasp: PROGRAMMER_ARGS =  # USBasp works with no further arguments
 flash_usbasp: flash
 
 flash_arduinoISP: PROGRAMMER_TYPE = avrisp
-flash_arduinoISP: PROGRAMMER_ARGS = -b 19200 -P /dev/ttyACM0 
-## (for windows) flash_arduinoISP: PROGRAMMER_ARGS = -b 19200 -P com5
+flash_arduinoISP: PROGRAMMER_ARGS = -b 19200 -P /dev/ttyACM0
+## (para windows) flash_arduinoISP: PROGRAMMER_ARGS = -b 19200 -P com5
 flash_arduinoISP: flash
 
 flash_109: PROGRAMMER_TYPE = avr109
@@ -159,38 +159,45 @@ flash_109: PROGRAMMER_ARGS = -b 9600 -P /dev/ttyUSB0
 flash_109: flash
 
 ##########------------------------------------------------------##########
-##########       Fuse settings and suitable defaults            ##########
+##########   Configuraciones de fusibles y valores adecuados    ##########
 ##########------------------------------------------------------##########
 
-## Mega 48, 88, 168, 328 default values
-LFUSE = 0x62
+# Valores para que el ATTiny45 use 8 MHz, mas informacion al final del documento.
+LFUSE = 0xE2
 HFUSE = 0xdf
-EFUSE = 0x00
+EFUSE = 0xff
 
-## Generic 
-FUSE_STRING = -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m 
+## Generico
+FUSE_STRING = -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
 
-fuses: 
+fuses:
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) \
 	           $(PROGRAMMER_ARGS) $(FUSE_STRING)
 show_fuses:
-	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -nv	
+	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -nv
 
-## Called with no extra definitions, sets to defaults
-set_default_fuses:  FUSE_STRING = -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m 
+## Llamado sin definiciones extra, configura los valores por defecto
+set_default_fuses:  FUSE_STRING = -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
 set_default_fuses:  fuses
 
-## Set the fuse byte for full-speed mode
-## Note: can also be set in firmware for modern chips
+## Configura el byte de fusible para modo de maxima velocidad
+## Nota: tambien puede ser configurado en el firmware para chips modernos
 set_fast_fuse: LFUSE = 0xE2
-set_fast_fuse: FUSE_STRING = -U lfuse:w:$(LFUSE):m 
+set_fast_fuse: FUSE_STRING = -U lfuse:w:$(LFUSE):m
 set_fast_fuse: fuses
 
-## Set the EESAVE fuse byte to preserve EEPROM across flashes
+## Configura el byte de fusible EESAVE para preservar la EEPROM entre programaciones del chip
 set_eeprom_save_fuse: HFUSE = 0xD7
 set_eeprom_save_fuse: FUSE_STRING = -U hfuse:w:$(HFUSE):m
 set_eeprom_save_fuse: fuses
 
-## Clear the EESAVE fuse byte
+## Quita el byte de fusible EESAVE
 clear_eeprom_save_fuse: FUSE_STRING = -U hfuse:w:$(HFUSE):m
 clear_eeprom_save_fuse: fuses
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+# Archivo Make simple para programar el ATtiny45 ver
+#  http://electronut.in/getting-started-with-attiny85-avr-programming/
+# Calculadora de fusibles, hay que desactivar el divisor de reloj ver
+#  http://www.engbedded.com/fusecalc/
