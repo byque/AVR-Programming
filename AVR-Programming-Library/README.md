@@ -1,16 +1,13 @@
-AVR-Programming-Library
-=======================
+Librería de Programación de AVR
+===============================
 
-Files that are re-used throughout the book *Make: AVR Programming*
+Archivos que son reusados en todo libro *Make: AVR Programming*
 
 * **pinDefines.h**
-	Includes all of the pin definitions for the projects in *Make: AVR Programming*.  When you
-	need to know what to hook up where, have a look here.
+	Incluye todas las definiciones de los pines para los proyectos en *Make: AVR Programming*. Cuando necesites saber que conectar en dónde, hecha un vistazo aquí.
 
-* **USART.c** and **USART.h**
-	These are the main utility files used for serial input/output in the book.  They're not
-	particularly clever, but they have a tiny memory and resource footprint and get you
-	up and running very quickly.
+* **USART.c** y **USART.h**
+	ADVERTENCIA! Estos archivos están comentados actualmente ya que el attiny tiene diferente hardware para la comunicación serial. Originalmente estos son los archivos de utilidad principales usados para la entrada/salida serial en el libro. No están particularmente optimizados, pero tienen una pequeña memoria y una recursos marcados y te pondrán en marcha muy rápido.
 
 * **binaryMacro.h**
 	If you're using a compiler other than a recent AVR-GCC, it may not support
