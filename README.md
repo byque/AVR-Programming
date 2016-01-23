@@ -37,8 +37,8 @@ Sin embargo, un montón de proyectos interesantes se encuentran adicionalmente a
 Por esa razón, para una visión detallada de todos los proyectos, el archivo [allProjectsList](https://github.com/hexagon5un/AVR-Programming/blob/master/allProjectsList) los enlista a todos por nombre.
 
 
-setupProject
-------------
+Configurar un Proyecto
+----------------------
 
 Si quieres una plantilla en blanco para comenzar a escribir tu propio código AVR, hecha un vistazo en el directorio **setupProject** que está incluído aquí. Adentro encontrarás los archivos **main.c** y **main.h** que están esencialmente en blanco y listos para usarse. **main.c** usa la librería simple de USART, que también está incluída y enlazada por el archivo **Makefile**. En corto, puedes copiar este directorio, renombrar los archivos y comenzar a usarlo en tus propios proyectos.
 
