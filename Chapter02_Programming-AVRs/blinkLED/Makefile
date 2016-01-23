@@ -51,16 +51,15 @@ AVRSIZE = avr-size
 # TARGET = blinkLED
 ## O nombralo automaticamente en base al directorio que lo abarca
 TARGET = $(lastword $(subst /, ,$(CURDIR)))
-#
-# # Archivos de objeto: encontraran cualquier archivo .c/.h files
-# #  en el directorio actual y en LIBDIR. Si tienes otro (sub)directorio
-# #  con codigo, puedes anadirlos en los SOURCES de abajo en la declaracion
-# #  comodin.
-#
-# SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
-# OBJECTS=$(SOURCES:.c=.o)
-# HEADERS=$(SOURCES:.c=.h)
-#
+
+# Archivos de objeto: encontraran cualquier archivo .c/.h en el directorio
+#  actual y en LIBDIR. Si tienes otro (sub)directorio con codigo, puedes
+#  anadirlos en los SOURCES de abajo en la declaracion comodin.
+
+SOURCES=$(wildcard *.c $(LIBDIR)/*.c)
+OBJECTS=$(SOURCES:.c=.o)
+HEADERS=$(SOURCES:.c=.h)
+
 # ## Opciones de compilacion, escribe man avr-gcc si eres curioso.
 # CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. -I$(LIBDIR)
 # CFLAGS = -Os -g -std=gnu99 -Wall
@@ -128,10 +127,9 @@ TARGET = $(lastword $(subst /, ,$(CURDIR)))
 
 ##########################################################################
 
-OBJECTS	= blinkLED.o
 
-# Para el ATTiny45
-# ver http://www.engbedded.com/fusecalc/
+# Para que el ATTiny45 use 8 MHz hay que desactivar el divisor de reloj.
+# Ver http://www.engbedded.com/fusecalc/
 FUSES      = -U lfuse:w:0xE2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
 
 # Tune the lines below only if you know what you are doing:
