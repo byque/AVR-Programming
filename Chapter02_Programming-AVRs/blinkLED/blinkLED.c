@@ -1,26 +1,26 @@
-                                                       /* Blinker Demo */
+                                                         /* Demo Blink */
 
-// ------- Preamble -------- //
-#include <avr/io.h>                        /* Defines pins, ports, etc */
-#include <util/delay.h>                     /* Functions to waste time */
+// ------- Preambulo -------- //
+#include <avr/io.h>                  /* Define los pines, puertos, etc */
+#include <util/delay.h>          /* Funciones para desperdiciar tiempo */
 
 
 int main(void) {
 
-  // -------- Inits --------- //
-  DDRB |= 0b0001000;            /* Data Direction Register B:
-                                   writing a one to the bit
-                                   enables output. */
+  // --- Inicializaciones --- //
+  DDRB |= 0b0000001;            /* Direccion de Datos del Registro B:
+                                   escribir un uno al bit
+                                   habilita la salida. */
 
-  // ------ Event loop ------ //
+  // --- Bucle de Eventos --- //
   while (1) {
 
-    PORTB = 0b00001000;          /* Turn on first LED bit/pin in PORTB */
-    _delay_ms(1000);                                           /* wait */
+    PORTB = 0b00000001;      /* Prender el primer LED bit/pin en PORTB */
+    _delay_ms(1000);                                        /* esperar */
 
-    PORTB = 0b00000000;          /* Turn off all B pins, including LED */
-    _delay_ms(1000);                                           /* wait */
+    PORTB = 0b00000000; /* Apagar todos los pines de B, incluyendo al LED */
+    _delay_ms(1000);                                        /* esperar */
 
-  }                                                  /* End event loop */
-  return (0);                            /* This line is never reached */
+  }                                       /* Acaba el bucle de eventos */
+  return (0);                           /* Nunca se llega a esta linea */
 }
